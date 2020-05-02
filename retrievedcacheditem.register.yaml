@@ -1,0 +1,23 @@
+artifact:
+  appState: 'IsRetrievedCachedItem'
+  appName: 'retrievedcacheditem'
+  appDomain: 'retrievedcacheditem'
+  appImage:
+    development: 'localhost:32000/retrievedcacheditem'
+    staging:
+    production: 'retrievedcacheditem'
+  appRelease: '1.0.0'
+  appSpacialScope:
+    internet: false
+    cluster: true
+  ports:
+    - 8080
+  conf:
+    development:
+    staging:
+    production:
+  enc:
+    development:
+    staging:
+    production:
+  dependencies:
