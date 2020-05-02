@@ -4,7 +4,7 @@
 
     <groupId>retreivedcacheditem</groupId>
     <artifactId>retreivedcacheditem</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <properties>
         <appState>IsRetreivedCachedItem</appState>
@@ -20,7 +20,7 @@
     <scm>
         <developerConnection>scm:git:git@github.com:Adimpression/retreivedcacheditem.git</developerConnection>
         <connection>scm:git:git@github.com:Adimpression/retreivedcacheditem.git</connection>
-        <tag>HEAD</tag>
+        <tag>retreivedcacheditem-1.0.0</tag>
     </scm>
 
     <distributionManagement>
