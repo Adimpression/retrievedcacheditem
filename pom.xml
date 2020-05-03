@@ -90,6 +90,11 @@
             <version>1.1-groovy-2.4-rc-2</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>storedcacheditem</groupId>
+            <artifactId>storedcacheditem</artifactId>
+            <version>1.0.1</version>
+        </dependency>
     </dependencies>
 
 

@@ -21,3 +21,7 @@ artifact:
     staging:
     production:
   dependencies:
+    - artifact:
+        appState: 'IsStoredCachedItem'
+        appName: 'storedcacheditem'
+        appDomain: 'storedcacheditem'
