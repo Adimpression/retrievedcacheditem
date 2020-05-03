@@ -4,11 +4,11 @@ import com.google.protobuf.ByteString;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.ILock;
-import id.output.IsOutput;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 import retrievedcacheditem.input.IsInput;
+import retrievedcacheditem.output.IsOutput;
 
 import java.util.Map;
 import java.util.logging.Level;
@@ -44,7 +44,7 @@ public class ToIsRetrievedCachedItemImplBaseImpl extends ToIsRetrievedCachedItem
     public void produce(final NotRetrievedCachedItem request, final StreamObserver<IsRetrievedCachedItem> responseObserver) {
         try {
             final IsInput isInput;
-            final IsOutput isIdisOutput;
+            final String isStringValue;
 
             if (!request.hasIsInput()) {
                 throw new StatusRuntimeException(Status.INVALID_ARGUMENT.withDescription("422"));
@@ -60,15 +60,33 @@ public class ToIsRetrievedCachedItemImplBaseImpl extends ToIsRetrievedCachedItem
                 throw new StatusRuntimeException(Status.INVALID_ARGUMENT.withDescription("422"));
             }
 
-            isIdisOutput = isInput.getIsId()
-                    .getIsOutput();
-            if (isIdisOutput
-                    .getIsStringValue().isEmpty()) {
+            isStringValue = isInput.getIsId()
+                    .getIsOutput()
+                    .getIsStringValue();
+            if (isStringValue
+                    .isEmpty()) {
                 throw new StatusRuntimeException(Status.INVALID_ARGUMENT.withDescription("422"));
             }
 
+            final ByteString bytes;
+
+            lock.lock();
+            try {
+                bytes = general.get(isStringValue);
+            } finally {
+                lock.unlock();
+            }
+
+            if (bytes == null) {
+                throw new StatusRuntimeException(Status.INVALID_ARGUMENT.withDescription("404"));
+            }
+
             responseObserver.onNext(IsRetrievedCachedItem.newBuilder()
+                    .setIsOutput(IsOutput.newBuilder()
+                            .setIsItemBytes(bytes)
+                            .build())
                     .build());
+
             responseObserver.onCompleted();
         } catch (Exception e) {
             logger.log(Level.SEVERE,

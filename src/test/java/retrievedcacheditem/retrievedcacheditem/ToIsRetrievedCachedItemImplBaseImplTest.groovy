@@ -50,4 +50,24 @@ class ToIsRetrievedCachedItemImplBaseImplTest extends Specification {
         def exception = thrown StatusRuntimeException
         exception.message == "INVALID_ARGUMENT: 422"
     }
+
+    def """Should throw an error on missing key"""() {
+        setup:
+        def request = NotRetrievedCachedItem.newBuilder()
+                .setIsInput(IsInput.newBuilder()
+                        .setIsId(IsId.newBuilder()
+                                .setIsOutput(IsOutput.newBuilder()
+                                        .setIsStringValue(String.valueOf(System.nanoTime()))
+                                        .build())
+                                .build())
+                        .build())
+                .build();
+
+        when:
+        blockingStub.produce(request)
+
+        then:
+        def exception = thrown StatusRuntimeException
+        exception.message == "INVALID_ARGUMENT: 404"
+    }
 }
