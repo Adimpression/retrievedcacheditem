@@ -51,7 +51,7 @@ class ToIsRetrievedCachedItemImplBaseImplTest extends Specification {
                                 .setIsOutput(IsOutput.newBuilder().build())
                                 .build())
                         .build())
-                .build();
+                .build()
 
         when:
         retrieve.produce(request)
@@ -71,7 +71,7 @@ class ToIsRetrievedCachedItemImplBaseImplTest extends Specification {
                                         .build())
                                 .build())
                         .build())
-                .build();
+                .build()
 
         when:
         retrieve.produce(request)
@@ -106,7 +106,7 @@ class ToIsRetrievedCachedItemImplBaseImplTest extends Specification {
                                 .build())
                         .setIsUseLockBoolean(true)
                         .build())
-                .build();
+                .build()
 
         when:
         store.produce(storeRequest)
