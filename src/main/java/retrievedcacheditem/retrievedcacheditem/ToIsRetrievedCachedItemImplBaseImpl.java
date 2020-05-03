@@ -70,11 +70,15 @@ public class ToIsRetrievedCachedItemImplBaseImpl extends ToIsRetrievedCachedItem
 
             final ByteString bytes;
 
-            lock.lock();
-            try {
+            if (isInput.getIsUseLockBoolean()) {
+                lock.lock();
+                try {
+                    bytes = general.get(isStringValue);
+                } finally {
+                    lock.unlock();
+                }
+            } else {
                 bytes = general.get(isStringValue);
-            } finally {
-                lock.unlock();
             }
 
             if (bytes == null) {
